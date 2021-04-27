@@ -39,8 +39,10 @@ public class GoToPlayer : State
         //Checking distance between dog and player
         if (Vector3.Distance(owner.GetComponent<Boid>().player.transform.position, owner.transform.position) < 10)
         {
+            owner.GetComponent<Boid>().ball.transform.parent = null;
             owner.ChangeState(new LookAtPlayer());
         }
+
     }
 
     public override void Exit()
@@ -64,15 +66,20 @@ public class LookAtPlayer : State
     {
         Vector3 dist = owner.GetComponent<Boid>().player.transform.position - owner.transform.position;
         owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, Quaternion.LookRotation(dist), Time.deltaTime);
-        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
+        /*        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
 
-        /*        if (owner.GetComponent<Dog>().ball == 0)
+                *//*        if (owner.GetComponent<Dog>().ball == 0)
+                        {
+                            owner.ChangeState(new FetchState());
+                            return;
+                        }*//*
+
+                if (Vector3.Distance(ball.transform.position, owner.GetComponent<Boid>().player.transform.position) > 15)
                 {
                     owner.ChangeState(new FetchState());
-                    return;
                 }*/
 
-        if (Vector3.Distance(ball.transform.position, owner.GetComponent<Boid>().player.transform.position) > 15)
+        if (Vector3.Distance(owner.GetComponent<Boid>().ball.transform.position, owner.GetComponent<Boid>().player.transform.position) > 10)
         {
             owner.ChangeState(new FetchState());
         }
@@ -90,13 +97,17 @@ public class LookAtPlayer : State
 // Fetch the ball
 public class FetchState : State
 {
-    Transform ball;
+    //Transform ball;
     public override void Enter()
     {
-        GameObject baller = GameObject.FindGameObjectWithTag("Ball");
+        /*        GameObject baller = GameObject.FindGameObjectWithTag("Ball");
 
-        ball = baller.transform;
-        owner.GetComponent<Seek>().targetGameObject = ball.gameObject;
+                ball = baller.transform;*/
+
+        AudioSource audio = owner.GetComponent<AudioSource>();
+        audio.Play();
+
+        owner.GetComponent<Seek>().targetGameObject = owner.GetComponent<Boid>().ball;
         owner.GetComponent<Seek>().enabled = true;
     }
 
@@ -116,11 +127,16 @@ public class FetchState : State
                     GameObject.Destroy(ball.gameObject);
                 }*/
 
-        if (Vector3.Distance(owner.transform.position, ball.position) < 1)
+        /*        if (Vector3.Distance(owner.transform.position, ball.position) < 1)
+                {
+                    owner.ChangeState(new GoToPlayer());
+                    ball.parent = owner.transform;
+                    ball.position = owner.GetComponent<Boid>().ballAttach.position;
+                }*/
+
+        if (Vector3.Distance(owner.GetComponent<Boid>().ball.transform.position, owner.transform.position) < 2)
         {
             owner.ChangeState(new GoToPlayer());
-            ball.parent = owner.transform;
-            ball.position = owner.GetComponent<Boid>().ballAttach.position;
         }
     }
 
@@ -128,7 +144,7 @@ public class FetchState : State
     {
 
         owner.GetComponent<Seek>().enabled = false;
-        //owner.GetComponent<Boid>().ball.transform.parent = owner.transform;
-        //owner.GetComponent<Boid>().ball.transform.position = owner.GetComponent<Boid>().attachPoint.position;
+        owner.GetComponent<Boid>().ball.transform.parent = owner.transform;
+        owner.GetComponent<Boid>().ball.transform.position = owner.GetComponent<Boid>().ballAttach.position;
     }
 }

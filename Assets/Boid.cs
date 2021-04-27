@@ -21,6 +21,7 @@ public class Boid : MonoBehaviour
 
     public GameObject player;
     public Transform ballAttach;
+    public GameObject ball;
 
     // Use this for initialization
     void Start()
