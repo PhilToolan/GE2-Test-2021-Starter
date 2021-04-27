@@ -8,6 +8,8 @@ public class ThrowBall : MonoBehaviour
     public GameObject ballpre;
     public bool isthrown = false;
 
+    public Dog dog;
+
     [SerializeField] float ballspeed = 20f;
 
     // Start is called before the first frame update
@@ -33,6 +35,8 @@ public class ThrowBall : MonoBehaviour
             ball.GetComponent<Rigidbody>().velocity = transform.forward * ballspeed;
 
             isthrown = true;
+
+            dog.ReduceBallAmount();
         }
     }
 }

@@ -23,6 +23,11 @@ public class StateMachine : MonoBehaviour
     // Use this for initialization
     void Start() { }
 
+/*    private void OnEnable()
+    {
+        StartCoroutine(Think());
+    }*/
+
     public void ChangeStateDelayed(State newState, float delay)
     {
         coroutine = ChangeStateCoRoutine(newState, delay);
@@ -70,6 +75,20 @@ public class StateMachine : MonoBehaviour
         if (currentState != null)
         {
             currentState.Think();
+        }
+    }
+
+    public void SetGlobalState(State state)
+    {
+        if (globalState != null)
+        {
+            globalState.Exit();
+        }
+        globalState = state;
+        if (globalState != null)
+        {
+            globalState.owner = this;
+            globalState.Enter();
         }
     }
 }
