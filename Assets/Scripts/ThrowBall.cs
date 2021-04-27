@@ -8,9 +8,6 @@ public class ThrowBall : MonoBehaviour
     public GameObject ball;
     public bool isthrown = false;
 
-    public Dog dog;
-
-
     [SerializeField] float ballspeed = 20f;
 
     // Start is called before the first frame update
