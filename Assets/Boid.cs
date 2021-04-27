@@ -20,7 +20,7 @@ public class Boid : MonoBehaviour
     public float maxForce = 10.0f;
 
     public GameObject player;
-    public Transform attachPoint;
+    public Transform ballAttach;
 
     // Use this for initialization
     void Start()

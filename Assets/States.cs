@@ -64,11 +64,17 @@ public class LookAtPlayer : State
     {
         Vector3 dist = owner.GetComponent<Boid>().player.transform.position - owner.transform.position;
         owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, Quaternion.LookRotation(dist), Time.deltaTime);
+        GameObject ball = GameObject.FindGameObjectWithTag("Ball");
 
-        if (owner.GetComponent<Dog>().ball == 0)
+        /*        if (owner.GetComponent<Dog>().ball == 0)
+                {
+                    owner.ChangeState(new FetchState());
+                    return;
+                }*/
+
+        if (Vector3.Distance(ball.transform.position, owner.GetComponent<Boid>().player.transform.position) > 15)
         {
             owner.ChangeState(new FetchState());
-            return;
         }
     }
 
@@ -112,9 +118,9 @@ public class FetchState : State
 
         if (Vector3.Distance(owner.transform.position, ball.position) < 1)
         {
-            //owner.ChangeState(new GoToPlayer());
-            //ball.parent = owner.transform;
-            //ball.position = owner.GetComponent<Boid>().attachPoint.position;
+            owner.ChangeState(new GoToPlayer());
+            ball.parent = owner.transform;
+            ball.position = owner.GetComponent<Boid>().ballAttach.position;
         }
     }
 

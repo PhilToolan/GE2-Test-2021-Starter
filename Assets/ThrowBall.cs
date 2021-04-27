@@ -10,12 +10,14 @@ public class ThrowBall : MonoBehaviour
 
     public Dog dog;
 
+    public GameObject ball;
+
     [SerializeField] float ballspeed = 20f;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ball = Instantiate(ballpre, transform.position, transform.rotation);
     }
 
     // Update is called once per frame
@@ -24,19 +26,31 @@ public class ThrowBall : MonoBehaviour
 
         if (isthrown)
         {
-            return;
-        }
+            if (Input.GetKeyDown("space"))
+            {
+                ball.transform.position = this.transform.position;
+                ball.GetComponent<Rigidbody>().velocity = transform.forward * ballspeed;
 
-        if (Input.GetKeyDown("space"))
+                isthrown = true;
+
+                dog.ReduceBallAmount();
+            }
+        }
+        else if (isthrown == false)
         {
-            var ball = Instantiate(ballpre, transform.position, transform.rotation);
+            if (Input.GetKeyDown("space"))
+            {
+                
 
-            //ball.GetComponent<Rigidbody>().AddForce(Vector3.forward * 500f);
-            ball.GetComponent<Rigidbody>().velocity = transform.forward * ballspeed;
+                //ball.GetComponent<Rigidbody>().AddForce(Vector3.forward * 500f);
+                ball.GetComponent<Rigidbody>().velocity = transform.forward * ballspeed;
 
-            isthrown = true;
+                isthrown = true;
 
-            dog.ReduceBallAmount();
+                dog.ReduceBallAmount();
+            }
         }
+
+
     }
 }
