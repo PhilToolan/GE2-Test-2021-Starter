@@ -7,7 +7,7 @@ public class DogController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<StateMachine>().ChangeState(new FetchState());
+        GetComponent<StateMachine>().ChangeState(new GoToPlayer());
         GetComponent<StateMachine>().SetGlobalState(new Alive());
     }
 

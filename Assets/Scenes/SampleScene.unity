@@ -962,6 +962,7 @@ MonoBehaviour:
   banking: 0.1
   maxSpeed: 5
   maxForce: 10
+  player: {fileID: 963194225}
 --- !u!114 &1503941575
 MonoBehaviour:
   m_ObjectHideFlags: 0
