@@ -10,7 +10,7 @@ public class Alive : State
     {
 
 
-        if (owner.GetComponent<Dog>().ball == 0)
+/*        if (owner.GetComponent<Dog>().ball == 0)
         {
             owner.ChangeState(new FetchState());
             return;
@@ -20,7 +20,7 @@ public class Alive : State
         {
             owner.ChangeState(new GoToPlayer());
             return;
-        }
+        }*/
 
     }
 }
@@ -65,11 +65,11 @@ public class LookAtPlayer : State
         Vector3 dist = owner.GetComponent<Boid>().player.transform.position - owner.transform.position;
         owner.transform.rotation = Quaternion.Slerp(owner.transform.rotation, Quaternion.LookRotation(dist), Time.deltaTime);
 
-/*        if (owner.GetComponent<Dog>().ball == 0)
+        if (owner.GetComponent<Dog>().ball == 0)
         {
             owner.ChangeState(new FetchState());
             return;
-        }*/
+        }
     }
 
     public override void Exit()
@@ -97,8 +97,6 @@ public class FetchState : State
     public override void Think()
     {
 
-        GameObject baller = GameObject.FindGameObjectWithTag("Ball");
-
         /*        if (ball == null)
                 {
                     owner.ChangeState(new FetchState());
@@ -114,9 +112,9 @@ public class FetchState : State
 
         if (Vector3.Distance(owner.transform.position, ball.position) < 1)
         {
-            owner.ChangeState(new GoToPlayer());
-            baller.transform.parent = owner.transform;
-            baller.transform.position = owner.GetComponent<Boid>().attachPoint.position;
+            //owner.ChangeState(new GoToPlayer());
+            //ball.parent = owner.transform;
+            //ball.position = owner.GetComponent<Boid>().attachPoint.position;
         }
     }
 
